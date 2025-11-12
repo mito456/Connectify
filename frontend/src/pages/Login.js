@@ -16,6 +16,10 @@ function Login() {
       console.log("Login response:", res.data);
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("user", JSON.stringify(res.data.user));
+      
+      // Dispatch custom event to notify App component
+      window.dispatchEvent(new Event("tokenChange"));
+      
       console.log("Navigating to /feed");
       navigate("/feed");
     } catch (err) {
@@ -27,10 +31,10 @@ function Login() {
 
   return (
     <div className="form-container">
-      <h2>Login</h2>
+      <h2>🔐 Welcome Back!</h2>
       <form onSubmit={handleSubmit}>
-        <input name="email" placeholder="Email" onChange={handleChange} />
-        <input name="password" type="password" placeholder="Password" onChange={handleChange} />
+        <input name="email" placeholder="📧 Email or @username" onChange={handleChange} required />
+        <input name="password" type="password" placeholder="🔑 Password" onChange={handleChange} required />
         <button type="submit">Login</button>
       </form>
       <p style={{ textAlign: "center", marginTop: "15px" }}>

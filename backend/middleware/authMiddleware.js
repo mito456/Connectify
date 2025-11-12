@@ -15,3 +15,6 @@ export const verifyToken = (req, res, next) => {
     return res.status(401).json({ msg: "Invalid/Expired token" });
   }
 };
+
+// Alias for verifyToken
+export const protect = verifyToken;

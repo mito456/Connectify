@@ -13,6 +13,9 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
+// Serve uploaded files statically
+app.use('/uploads', express.static('uploads'));
+
 // routes
 app.use("/api/auth", authRoutes);
 // After app.use("/api/auth", authRoutes);
@@ -20,10 +23,16 @@ app.use("/api/auth", authRoutes);
 import postRoutes from "./routes/postRoutes.js";
 import chatRoutes from "./routes/chatRoutes.js";
 import messageRoutes from "./routes/messageRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
+import uploadRoutes from "./routes/uploadRoutes.js";
+import notificationRoutes from "./routes/notificationRoutes.js";
 
 app.use("/api/posts", postRoutes);
 app.use("/api/chat", chatRoutes);
 app.use("/api/message", messageRoutes);
+app.use("/api/users", userRoutes);
+app.use("/api/upload", uploadRoutes);
+app.use("/api/notifications", notificationRoutes);
 
 
 // start http + socket.io server
