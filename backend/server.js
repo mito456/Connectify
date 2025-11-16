@@ -41,7 +41,7 @@ const httpServer = http.createServer(app);
 
 const io = new IOServer(httpServer, {
   cors: {
-    origin: "*",
+    origin: "*", // Allow ANY website to connect, for FE
     methods: ["GET", "POST"]
   }
 });

@@ -123,7 +123,7 @@ function Chat() {
       setMessages(msgs.data);
       setShowNewChatModal(false);
       
-      // Mark as seen
+      // Mark as seen when viewing the chat
       const newLastSeen = { ...lastSeenMessages, [chatUser._id]: new Date().toISOString() };
       setLastSeenMessages(newLastSeen);
       localStorage.setItem(`lastSeenMessages_${user.id}`, JSON.stringify(newLastSeen));
@@ -145,6 +145,14 @@ function Chat() {
     socket.emit("sendMessage", { senderId: user.id, receiverId: selectedUser._id, text });
     setMessages((prev) => [...prev, { ...newMsg, createdAt: new Date() }]);
     setText("");
+    
+    // Mark as seen when sending a reply
+    const newLastSeen = { ...lastSeenMessages, [selectedUser._id]: new Date().toISOString() };
+    setLastSeenMessages(newLastSeen);
+    localStorage.setItem(`lastSeenMessages_${user.id}`, JSON.stringify(newLastSeen));
+    
+    // Dispatch custom event to notify navbar
+    window.dispatchEvent(new Event('lastSeenUpdated'));
     
     // Refresh chat list to update preview
     fetchChatUsers();
